@@ -5,16 +5,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./src/HomeScreen";
 import DetailsScreen from "./src/DetailsScreen";
 import Welcome from "./src/Welcome"
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import NoteScreen from "./src/NoteScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Welcome} />
-        <Stack.Screen name="Intro" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        
+         <Stack.Screen name="Welcome" component={Welcome} />
+       {/*  <Stack.Screen name="Intro" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />  */}
+        <Stack.Screen name="NoteScreen" component={NoteScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

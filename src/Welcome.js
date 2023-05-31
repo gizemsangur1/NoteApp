@@ -1,22 +1,16 @@
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import { color } from "@rneui/base";
 import { useState } from "react";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import NoteScreen from "./NoteScreen";
 export default function DetailsScreen({ navigation }) {
-  const [name, setName] = useState();
-  const handleText = text =>  setName(text);
+
   return (
     <View style={styles.container}>
       <Text style={styles.Text}>Please enter your name to continue</Text>
-      <TextInput
-        value={name}
-        onChangeText={handleText}
-        defaultValue="Enter your name"
-        style={styles.TextInput}
-      ></TextInput>
+      
     </View>
   );
 }
@@ -36,5 +30,10 @@ const styles = StyleSheet.create({
     width: "70%",
     height: "6%",
     padding: 5,
+  },
+  Button:{
+    borderRadius:5,
+    backgroundColor:"pink",
+
   },
 });
