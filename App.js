@@ -8,16 +8,16 @@ import Welcome from "./src/Welcome"
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NoteScreen from "./src/NoteScreen";
+import Note from "./src/Note";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="NoteScreen">
          <Stack.Screen name="Welcome" component={Welcome} />
-       {/*  <Stack.Screen name="Intro" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />  */}
+         <Stack.Screen name="Note" component={Note} />
         <Stack.Screen name="NoteScreen" component={NoteScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
