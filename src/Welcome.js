@@ -34,15 +34,22 @@ export default function DetailsScreen({ navigation }) {
       </ListItem>
     </View>
   );
-
+const gotoCreate=()=>{
+  navigation.navigate("NoteScreen");
+}
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={notes}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    </View>
+    <>
+      <View style={styles.container}>
+        <FlatList
+          data={notes}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
+      <View>
+        <Button title="Create" onPress={gotoCreate}></Button>
+      </View>
+    </>
   );
 }
 const styles = StyleSheet.create({
