@@ -8,7 +8,7 @@ import NoteScreen from "./NoteScreen";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native";
 import { ListItem } from "@rneui/base";
-export default function DetailsScreen({ navigation }) {
+export default function Welcome({ navigation }) {
   const [notes, setNotes] = useState([]);
 
   useFocusEffect(
@@ -23,20 +23,21 @@ export default function DetailsScreen({ navigation }) {
     });
   };
   const renderItem = ({ item, index }) => (
-    <View style={styles.noteItem}>
+    <View style={styles.item}>
       <ListItem
+      style={{backgroundColor:"pink"}}
         onPress={() => {
           navigation.navigate("Note", { singleNote: item });
         }}
       >
-        <Text>{item.title}</Text>
-        <Text>{item.content}</Text>
+        <Text  style={{backgroundColor:"pink"}}>{item.header}</Text>
       </ListItem>
     </View>
   );
-const gotoCreate=()=>{
-  navigation.navigate("NoteScreen");
-}
+  const gotoCreate = () => {
+    navigation.navigate("NoteScreen");
+  };
+
   return (
     <>
       <View style={styles.container}>
@@ -54,12 +55,9 @@ const gotoCreate=()=>{
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-  },
-  Text: {
-    padding: 4,
   },
   TextInput: {
     borderRadius: 3,
@@ -72,5 +70,16 @@ const styles = StyleSheet.create({
   Button: {
     borderRadius: 5,
     backgroundColor: "pink",
+  },
+
+  item: {
+    borderRadius: 5,
+    height: 150,
+    backgroundColor: "#f9c2ff",
+    alignItems:"center",
+    justifyContent:"center",
+    flex: 3,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
 });

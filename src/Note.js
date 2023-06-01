@@ -21,14 +21,12 @@ const Note = ({ route }) => {
   };
 
   const deleteNote = async () => {
-    const newNotes = notes.filter(
-        (note) => note.header !== singleNote.header && note.content !== singleNote.content
-      );
-      await AsyncStorage.setItem("NOTES", JSON.stringify(newNotes)).then(() => {
-        setNotes(newNotes);
-        navigation.navigate("Welcome");
-      });
-    };
+    const newNotes = notes.filter((note) => note.id !== singleNote.id);
+    await AsyncStorage.setItem("NOTES", JSON.stringify(newNotes)).then(() => {
+      setNotes(newNotes);
+      navigation.navigate("Welcome");
+    });
+  };
 
   return (
     <View style={styles.container}>
