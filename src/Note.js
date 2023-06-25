@@ -11,6 +11,8 @@ const Note = ({ route }) => {
   const [notes, setNotes] = useState([]);
   const navigation = useNavigation();
   const { singleNote } = route.params;
+  const [headerValue, setHeaderValue] = useState(singleNote.header || "");
+  const [contentValue, setContentValue] = useState(singleNote.content || "");
   useFocusEffect(
     React.useCallback(() => {
       getNotes();
@@ -21,6 +23,33 @@ const Note = ({ route }) => {
     AsyncStorage.getItem("NOTES").then((notes) => {
       setNotes(JSON.parse(notes));
     });
+  };
+
+  const updatedNote = {
+    ...singleNote,
+    header: headerValue,
+    content: contentValue,
+  };
+
+  const updateNote = async () => {
+    const updatedNotes = [...notes];
+    const updatedNote = {
+      ...singleNote,
+      header: headerValue,
+      content: contentValue,
+    };
+
+    const noteIndex = updatedNotes.findIndex(
+      (note) => note.id === singleNote.id
+    );
+    updatedNotes[noteIndex] = updatedNote;
+
+    await AsyncStorage.setItem("NOTES", JSON.stringify(updatedNotes)).then(
+      () => {
+        setNotes(updatedNotes);
+        navigation.navigate("Welcome");
+      }
+    );
   };
 
   const deleteNote = async () => {
@@ -35,26 +64,43 @@ const Note = ({ route }) => {
   };
   return (
     <View style={styles.surface}>
-      <View style={styles.navigationbar}>
-        <TouchableOpacity onPress={goback} style={styles.arrow}>
-          <Icon name="arrow-left" color="#eaebf4"  />
-        </TouchableOpacity>
-        <Text>NOTE</Text>
-      </View>
       <View style={styles.container}>
-        <TextInput style={styles.text}>{singleNote.header}</TextInput>
-        <Text style={styles.text}>{singleNote.content}</Text>
-      </View>
-
-      <View>
-        <Button
-          onPress={deleteNote}
-          title="Delete"
-          style={styles.button}
-          textColor="#eaebf4"
+        <TextInput
+          style={styles.text}
+          value={headerValue}
+          defaultValue={singleNote.header}
+          onChangeText={(text) => setHeaderValue(text)}
         >
-          DELETE
-        </Button>
+        </TextInput>
+        <TextInput
+          style={styles.text}
+          value={contentValue}
+          defaultValue={singleNote.content}
+          onChangeText={(text) => setContentValue(text)}
+        >
+        </TextInput>
+      </View>
+      <View>
+        <View>
+          <Button
+            onPress={deleteNote}
+            title="Delete"
+            style={styles.button}
+            textColor="#eaebf4"
+          >
+            DELETE
+          </Button>
+        </View>
+        <View>
+          <Button
+            onPress={updateNote}
+            title="Submit"
+            style={styles.button}
+            textColor="#eaebf4"
+          >
+            SUBMIT
+          </Button>
+        </View>
       </View>
     </View>
   );
@@ -87,15 +133,5 @@ const styles = StyleSheet.create({
     width: "25%",
     top: 12,
     left: 6,
-  },
-  navigationbar: {
-    position: "relative",
-    top: 0,
-    backgroundColor: "#36406e",
-    height: 50,
-    width: "100%",
-    marginBottom: 5,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
   },
 });

@@ -71,17 +71,7 @@ export default function Welcome({ navigation }) {
   }, []);
   return (
     <Surface style={styles.surface} elevation={4}>
-      <View style={styles.navigationbar}>
-        <TouchableOpacity onPress={gotoSetup} style={styles.button}>
-          <Icon name="settings" color="#eaebf4" />
-        </TouchableOpacity>
-
-        <View>
-          <Text style={styles.user}>
-            Good {date} {user} !
-          </Text>
-        </View>
-      </View>
+      
       <View style={styles.container}>
         <FlatList
           data={notes}
