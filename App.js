@@ -12,6 +12,7 @@ import Password from "./src/Password";
 import SNote from "./src/Secret/SNote";
 import SNoteScreen from "./src/Secret/SNoteScreen";
 import SecretNotes from "./src/Secret/SecretNotes";
+import SPassword from "./src/Secret/SPassword";
 const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
@@ -127,6 +128,18 @@ export default function App({ navigation }) {
           <Stack.Screen
             name="SecretNotes"
             component={SecretNotes}
+            options={{
+              headerTitle: "",
+              headerStyle: {
+                backgroundColor: "#36406e",
+                color: "#eaebf4",
+              },
+              headerTintColor: "#eaebf4",
+            }}
+          />
+          <Stack.Screen
+            name="SPassword"
+            component={SPassword}
             options={{
               headerTitle: "",
               headerStyle: {

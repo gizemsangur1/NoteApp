@@ -44,10 +44,17 @@ export default function Welcome({ navigation }) {
     </TouchableOpacity>
   );
   const gotoCreate = () => {
-    navigation.navigate("Password");
+    navigation.navigate("NoteScreen");
   };
-  const gotoSecret = () => {
-    navigation.navigate("SecretNotes");
+  const gotoSecret =async () => {
+    const keys = await AsyncStorage.getAllKeys();
+  const passwordKeys = keys.filter((key) => key.startsWith('password'));
+  const count = passwordKeys.length;
+  if (count === 1) {
+    navigation.navigate("SPassword");
+  } else if (count === 0) {
+    navigation.navigate("Password");
+  }
   };
   const [time, setTime] = useState(new Date());
   useEffect(() => {
