@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {  Text,  View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Welcome from "./src/Welcome";
@@ -8,8 +8,6 @@ import { useState } from "react";
 import { UserProvider } from "./src/UserContext";
 import { useEffect } from "react";
 import * as React from "react";
-import { TouchableOpacity } from "react-native";
-import { Icon } from "@rneui/themed";
 const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
@@ -51,7 +49,9 @@ export default function App({ navigation }) {
 
               headerLeft: () => (
                 <View>
-                  <Text style={{ color: "#eaebf4" }}>Good {date} !</Text>
+                  <Text style={{ color: "#eaebf4",fontSize:20 }}>
+                    Good {date} !
+                  </Text>
                 </View>
               ),
               headerStyle: {

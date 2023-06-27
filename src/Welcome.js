@@ -1,19 +1,26 @@
 import * as React from "react";
-import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import {  StyleSheet, Text,  View } from "react-native";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import NoteScreen from "./NoteScreen";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { FlatList } from "react-native";
-import { ListItem } from "@rneui/base";
 import { TouchableOpacity } from "react-native";
 import { Surface } from "react-native-paper";
 import { Icon } from "@rneui/themed";
 import { useEffect } from "react";
 import { UserContext } from "./UserContext";
+import { RefreshControl } from "react-native";
+
 export default function Welcome({ navigation }) {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   const [notes, setNotes] = useState([]);
   const { user } = React.useContext(UserContext);
   useFocusEffect(
@@ -70,24 +77,31 @@ export default function Welcome({ navigation }) {
     }
   }, []);
   return (
-    <Surface style={styles.surface} elevation={4}>
-      
-      <View style={styles.container}>
-        <FlatList
-          data={notes}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-        <Icon
-          name="add"
-          onPress={gotoCreate}
-          style={styles.Button}
-          color="#6374ae"
-        />
-      </View>
-    </Surface>
+  /*   <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      } style={styles.ScrollView}
+    > */
+      <Surface style={styles.surface} elevation={4}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      >
+        <View style={styles.container}>
+           <FlatList
+            data={notes}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          /> 
+        </View>
+        <View style={styles.buttonContainer}>
+          <Icon
+            name="add"
+            onPress={gotoCreate}
+            style={styles.Button}
+            color="#6374ae"
+          />
+        </View> 
+      </Surface>
+   /*  </ScrollView> */
   );
 }
 const styles = StyleSheet.create({
@@ -122,7 +136,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   Text: {
-    fontSize: 35,
+    fontSize: 45,
     color: "#eaebf4",
   },
   buttonContainer: {
@@ -147,6 +161,11 @@ const styles = StyleSheet.create({
     padding: 8,
     height: "100%",
     alignItems: "center",
+    backgroundColor: "#d0d4e7",
+  },
+  ScrollView:{
+    padding: 8,
+    height: "100%",
     backgroundColor: "#d0d4e7",
   },
   navigationbar: {

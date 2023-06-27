@@ -1,9 +1,8 @@
-import { StatusBar, StyleSheet, Text, TextInput, View } from "react-native";
-import { Button, Surface } from "react-native-paper";
+import {  StyleSheet, TextInput, View } from "react-native";
+import { Button } from "react-native-paper";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { v4 } from "uuid";
 const NoteScreen = () => {
   const [note, setNote] = useState({ id: "", header: "", content: "" });
   const navigation = useNavigation();
@@ -27,18 +26,19 @@ const NoteScreen = () => {
       <View style={styles.surface}>
         <View style={styles.container}>
           <TextInput
-            style={styles.text}
+            style={styles.header}
             value={note.header}
             onChangeText={(text) => setNote({ ...note, header: text })}
             multiline={false}
             autoFocus
+            placeholder="Header"
           />
           <TextInput
             style={styles.text}
             value={note.content}
             onChangeText={(text) => setNote({ ...note, content: text })}
             multiline={true}
-            autoFocus
+            placeholder="Note"
           />
         </View>
         <View>
@@ -64,6 +64,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#414f88",
     margin: 5,
+    height:50,
+    justifyContent:"center",
   },
   surface: {
     height: "100%",
@@ -73,7 +75,12 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 1,
+    fontSize:20,
+  },
+  header: {
+    padding: 10,
+    margin: 10,
+    borderColor: "black",
+    fontSize:30,
   },
 });
