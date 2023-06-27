@@ -10,7 +10,7 @@ import { Icon } from "@rneui/themed";
 import { useEffect } from "react";
 import { RefreshControl } from "react-native";
 
-export default function Welcome({ navigation }) {
+export default function SecretNotes({ navigation }) {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -20,22 +20,22 @@ export default function Welcome({ navigation }) {
     }, 2000);
   }, []);
 
-  const [notes, setNotes] = useState([]);
+  const [Snotes, setSNotes] = useState([]);
   useFocusEffect(
     React.useCallback(() => {
-      getNotes();
+      getSNotes();
     }, [])
   );
 
-  const getNotes = () => {
-    AsyncStorage.getItem("NOTES").then((notes) => {
-      setNotes(JSON.parse(notes));
+  const getSNotes = () => {
+    AsyncStorage.getItem("SNOTES").then((Snotes) => {
+      setSNotes(JSON.parse(Snotes));
     });
   };
   const renderItem = ({ item, index }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("Note", { singleNote: item });
+        navigation.navigate("SNote", { singleSNote: item });
       }}
     >
       <View style={styles.item}>
@@ -44,10 +44,10 @@ export default function Welcome({ navigation }) {
     </TouchableOpacity>
   );
   const gotoCreate = () => {
-    navigation.navigate("Password");
+    navigation.navigate("SNoteScreen");
   };
-  const gotoSecret = () => {
-    navigation.navigate("SecretNotes");
+  const gotoSetup = () => {
+    navigation.navigate("Setup");
   };
   const [time, setTime] = useState(new Date());
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function Welcome({ navigation }) {
       >
         <View style={styles.container}>
            <FlatList
-            data={notes}
+            data={Snotes}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
           /> 
@@ -94,12 +94,6 @@ export default function Welcome({ navigation }) {
           <Icon
             name="add"
             onPress={gotoCreate}
-            style={styles.Button}
-            color="#6374ae"
-          />
-          <Icon
-            name="add"
-            onPress={gotoSecret}
             style={styles.Button}
             color="#6374ae"
           />

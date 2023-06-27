@@ -1,4 +1,4 @@
-import {  Text,  View } from "react-native";
+import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Welcome from "./src/Welcome";
@@ -8,6 +8,10 @@ import { useState } from "react";
 import { UserProvider } from "./src/UserContext";
 import { useEffect } from "react";
 import * as React from "react";
+import Password from "./src/Password";
+import SNote from "./src/Secret/SNote";
+import SNoteScreen from "./src/Secret/SNoteScreen";
+import SecretNotes from "./src/Secret/SecretNotes";
 const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
@@ -49,7 +53,7 @@ export default function App({ navigation }) {
 
               headerLeft: () => (
                 <View>
-                  <Text style={{ color: "#eaebf4",fontSize:20 }}>
+                  <Text style={{ color: "#eaebf4", fontSize: 20 }}>
                     Good {date} !
                   </Text>
                 </View>
@@ -74,6 +78,55 @@ export default function App({ navigation }) {
           <Stack.Screen
             name="NoteScreen"
             component={NoteScreen}
+            options={{
+              headerTitle: "",
+              headerStyle: {
+                backgroundColor: "#36406e",
+                color: "#eaebf4",
+              },
+              headerTintColor: "#eaebf4",
+            }}
+          />
+
+          <Stack.Screen
+            name="Password"
+            component={Password}
+            options={{
+              headerTitle: "",
+              headerStyle: {
+                backgroundColor: "#36406e",
+                color: "#eaebf4",
+              },
+              headerTintColor: "#eaebf4",
+            }}
+          />
+          <Stack.Screen
+            name="SNote"
+            component={SNote}
+            options={{
+              headerTitle: "",
+              headerStyle: {
+                backgroundColor: "#36406e",
+                color: "#eaebf4",
+              },
+              headerTintColor: "#eaebf4",
+            }}
+          />
+          <Stack.Screen
+            name="SNoteScreen"
+            component={SNoteScreen}
+            options={{
+              headerTitle: "",
+              headerStyle: {
+                backgroundColor: "#36406e",
+                color: "#eaebf4",
+              },
+              headerTintColor: "#eaebf4",
+            }}
+          />
+          <Stack.Screen
+            name="SecretNotes"
+            component={SecretNotes}
             options={{
               headerTitle: "",
               headerStyle: {
