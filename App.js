@@ -41,7 +41,6 @@ export default function App({ navigation }) {
       setDate("Night");
     }
   }, []);
-
   return (
     <UserProvider>
       <NavigationContainer>
@@ -135,6 +134,7 @@ export default function App({ navigation }) {
                 color: "#eaebf4",
               },
               headerTintColor: "#eaebf4",
+             
             }}
           />
           <Stack.Screen

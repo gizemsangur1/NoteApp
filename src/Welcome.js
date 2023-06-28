@@ -1,5 +1,5 @@
 import * as React from "react";
-import {  StyleSheet, Text,  View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
@@ -11,15 +11,6 @@ import { useEffect } from "react";
 import { RefreshControl } from "react-native";
 
 export default function Welcome({ navigation }) {
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
   const [notes, setNotes] = useState([]);
   useFocusEffect(
     React.useCallback(() => {
@@ -46,15 +37,15 @@ export default function Welcome({ navigation }) {
   const gotoCreate = () => {
     navigation.navigate("NoteScreen");
   };
-  const gotoSecret =async () => {
+  const gotoSecret = async () => {
     const keys = await AsyncStorage.getAllKeys();
-  const passwordKeys = keys.filter((key) => key.startsWith('password'));
-  const count = passwordKeys.length;
-  if (count === 1) {
-    navigation.navigate("SPassword");
-  } else if (count === 0) {
-    navigation.navigate("Password");
-  }
+    const passwordKeys = keys.filter((key) => key.startsWith("password"));
+    const count = passwordKeys.length;
+    if (count === 1) {
+      navigation.navigate("SPassword");
+    } else if (count === 0) {
+      navigation.navigate("Password");
+    }
   };
   const [time, setTime] = useState(new Date());
   useEffect(() => {
@@ -81,21 +72,36 @@ export default function Welcome({ navigation }) {
       setDate("Night");
     }
   }, []);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      gotoSecret();
+    }, 2000);
+  }, []);
+
   return (
-  /*   <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      } style={styles.ScrollView}
-    > */
-      <Surface style={styles.surface} elevation={4}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      >
+    <>
+      <View >
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} style={{zIndex:999}} progressBackgroundColor={"#d0d4e7"}/>
+          }
+          style={{ height: 50, width: "100%", backgroundColor: "#d0d4e7" }}
+        >
+        </ScrollView>
+      </View>
+
+      <View style={styles.surface} >
         <View style={styles.container}>
-           <FlatList
+          <FlatList
             data={notes}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
-          /> 
+          />
         </View>
         <View style={styles.buttonContainer}>
           <Icon
@@ -104,15 +110,9 @@ export default function Welcome({ navigation }) {
             style={styles.Button}
             color="#6374ae"
           />
-          <Icon
-            name="add"
-            onPress={gotoSecret}
-            style={styles.Button}
-            color="#6374ae"
-          />
-        </View> 
-      </Surface>
-   /*  </ScrollView> */
+        </View>
+      </View>
+    </>
   );
 }
 const styles = StyleSheet.create({
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: "absolute",
-    bottom: 16,
+    bottom: 68,
     right: 16,
     borderRadius: 50,
   },
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#d0d4e7",
   },
-  ScrollView:{
+  ScrollView: {
     padding: 8,
     height: "100%",
     backgroundColor: "#d0d4e7",
